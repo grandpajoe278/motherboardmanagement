@@ -8,7 +8,7 @@ Writes details (name, price bought, price sold) to a .csv file while also record
 3 different functions built in (through commandline):
 
 1. Write details about board to .csv file. Profit will be recorded automatically based on a formula.
-Input format: "python3 MotherboardManager.py BOARD_NAME PRICE_BOUGHT PRICE_SOLD", PROFIT will be calculated automatically and stored to csv file.
+Input format: "python3 MotherboardManager.py BOARD_NAME PRICE_BOUGHT PRICE_SOLD", PROFIT will be calculated automatically and stored to csv file. Put an underscore where there should be a space in the motherboard name, it will be converted to a space automatically.
 Example: "python3 MotherboardManager.py ASUS_P8Z77V 45.00 69.00"
 
 2. Return the price necessary to break even when flipping a motherboard. Input is the buying price. The selling price will be returned automatically. Only put in the price of the item+shipping, do not input taxes (~6%) since that is calculated automatically. 
