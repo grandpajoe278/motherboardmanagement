@@ -1,6 +1,6 @@
 # motherboardmanagement
 SETUP:
-M.csv is my spreadsheet file that keeps track of all motherboard details. Before running the program, edit the code so that the file path is correct and pointing to where YOU downloaded M.csv . M.csv is referenced in the code 3 times.
+M.csv is my spreadsheet file that keeps track of all motherboard details. Before running the program, edit the code so that the file path is correct and pointing to where YOU downloaded M.csv . "M.csv" is referenced in the code 3 times. The references have this format: "with open ("FILE_PATH/m.csv", "......") as f:
 
 ABOUT & HOW TO USE:
 Writes details (name, price bought, price sold) to a .csv file while also recording the profit. Also calculates necessary selling price for a given buying price. Can also return total profit.
