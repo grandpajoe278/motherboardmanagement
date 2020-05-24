@@ -52,7 +52,7 @@ class Board:
         # This writes to the CSV file a MOTHERBOARD_NAME, PRICE BOUGHT, PRICE SOLD and automatically
         # computes PROFIT and puts it in too.
         mode = 'a' if os.path.exists(list_name) else 'w'
-        with open(list_name, mode, encoding="utf-8") as f:
+        with open(list_name, mode, encoding="utf-8", newline='') as f:
             titles = ["Board", "Bought Price", "Sold Price", "~Profit"]
             writer = csv.DictWriter(f, fieldnames=titles)
 
@@ -62,8 +62,8 @@ class Board:
         # The program above works, but write bizarre empty line to the end of the
         # file, removing them now
         # If the cause of that issue is found and fixed, this line and the function can be removed safely
-        # TODO: Solving this problem will improve speed if dealing with very large file.
-        remove_empty()
+        # SOLVED
+        # remove_empty()
 
 
 # Calculate total profit from file
@@ -72,7 +72,8 @@ def calc_total():
     if os.path.exists(list_name):
         # Removes empty lines in the file to avoid runtime error, can be safely removed if the issue mentioned on
         # line 62 is fixed (maybe, leaving it here will help with blank lines unintentionally created)
-        remove_empty()
+        # SOLVED
+        # remove_empty()
         with open(list_name, 'r', encoding="utf-8") as f:
             excel = csv.reader(f)
             total_profit = 0.00
@@ -103,13 +104,14 @@ def print_list():
     if os.path.exists(list_name):
         # Removes empty lines in the file to avoid runtime error, can be safely removed if the issue mentioned on
         # line 62 is fixed (maybe, leaving it here will help with blank lines unintentionally created)
-        remove_empty()
+        # SOLVED
+        # remove_empty()
         with open(list_name, 'r', encoding="utf-8") as f:
             excel = csv.reader(f)
             try:
                 for line in excel:
                     print(line)
-                    # This can be more polished
+                    # TODO This can be more polished
             except Exception as e:  # Error Handling
                 print('Runtime Error:', e)
                 print('The program will now continue. If the error persist, contact the developer')
@@ -135,7 +137,7 @@ if __name__ == '__main__':
         list_name = sys.argv[1]
     while True:
         clear()
-        print(menu_message1 + list_name + menu_message2)
+        print(menu_message1 + list_name + menu_message2)  # Merge the welcome message, adding the list_name
         operation = input()
         if operation == '1':  # Process a new board
             b = Board()
