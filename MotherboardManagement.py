@@ -18,13 +18,14 @@ def clear():
 
 
 # Remove empty lines in the file to avoid error in processing
+# Currently useless
 # DO NOT RUN IF UNSURE THE FILE EXIST, FILE CHECK REQUIRED, WILL THROW ERROR IF FILE DOESN'T EXIST
-def remove_empty():
-    with open(list_name, 'r') as f:
-        lines = f.readlines()  # Read all the lines
-    with open(list_name, 'w') as f:
-        lines = filter(lambda x: x.strip(), lines)  # remove all blank lines by filtering
-        f.writelines(lines)  # write it all back
+# def remove_empty():
+#     with open(list_name, 'r') as f:
+#         lines = f.readlines()  # Read all the lines
+#     with open(list_name, 'w') as f:
+#         lines = filter(lambda x: x.strip(), lines)  # remove all blank lines by filtering
+#         f.writelines(lines)  # write it all back
 
 
 class Board:
@@ -47,11 +48,10 @@ class Board:
         self.profit = float(self.sold - (1.23 * self.brought + 15.00))  # Applying formula
         return self.profit
 
-    def write_to_csv(
-            self):
+    def write_to_csv(self):
         # This writes to the CSV file a MOTHERBOARD_NAME, PRICE BOUGHT, PRICE SOLD and automatically
         # computes PROFIT and puts it in too.
-        mode = 'a' if os.path.exists(list_name) else 'w'
+        mode = 'a' if os.path.exists(list_name) else 'w'  # If file does not exist, create it by using mode 'w'
         with open(list_name, mode, encoding="utf-8", newline='') as f:
             titles = ["Board", "Bought Price", "Sold Price", "~Profit"]
             writer = csv.DictWriter(f, fieldnames=titles)
@@ -86,7 +86,7 @@ def calc_total():
                       'file and make sure it is formatted correctly.')
 
             except Exception as e:  # Error Handling
-                print('Runtime Error:', e)
+                print('Runtime Error: ', e)
                 print('The program will now continue. If the error persist, contact the developer')
                 print('Check your file and make sure it is formatted correctly.')
     else:  # The file is not there.
@@ -117,14 +117,12 @@ def print_list():
                 print('The program will now continue. If the error persist, contact the developer')
 
 
-# Add two parts of the welcome message, will be put together added with the list_name
-menu_message1 = '''Welcome to MotherboardManagement
+# The Welcome Message
+menu_message = '''Welcome to MotherboardManagement
     By Isaac Chen and Joe Yu
                 
-Current filename: '''
-
-menu_message2 = '''
---------------------------------
+Current filename: {0}
+------------------------------------
 [1] Add a board
 [2] Calculate breakeven for a price 
 [3] View full list
@@ -136,12 +134,12 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:  # If an argument is passed, set the list_name
         list_name = sys.argv[1]
     while True:
-        clear()
-        print(menu_message1 + list_name + menu_message2)  # Merge the welcome message, adding the list_name
+        clear()  # Clear console screen for user experience
+        print(menu_message.format(list_name))  # Format the message with list_name
         operation = input()
         if operation == '1':  # Process a new board
-            b = Board()
-            b.init()
+            b = Board()  # Make an object
+            b.init()  # Init from user input
             print("Profit is $" + str(b.gen_profit()))
             next_step = input('Write to file? Y/N\n')  # Prompting user to write to file
             if next_step == 'y' or next_step == 'Y':
