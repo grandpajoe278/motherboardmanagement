@@ -88,7 +88,7 @@ def calc_total():
 
 # Calculate breakeven by the formula
 def breakeven(x):
-    return int((1.23 * x + 15) * 100 + 0.5) / 100.0
+    return int((1.23 * float(x) + 15) * 100 + 0.5) / 100.0
 
 
 # Simply Print the list
