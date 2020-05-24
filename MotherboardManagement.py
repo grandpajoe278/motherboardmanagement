@@ -1,11 +1,12 @@
 # WELCOME TO THE MOTHERBOARD MANAGEMENT CODE! THIS WILL BE UPDATED TO BE EASIER TO UNDERSTAND.
 import csv
 import os
+import sys
 
 listname = 'M.csv'
 
 
-# Clear
+# Clear console screen
 def clear():
     # for windows
     if os.name == 'nt':
@@ -35,10 +36,10 @@ class Board:
 
     def init(self):  # Input board information from console
         print('Please Enter')
-        self.name = input('Motherboard Name	:')
+        self.name = input('Motherboard Name:')
         try:
-            self.brought = float(input('Brought Price		:$'))
-            self.sold = float(input('Sold Price			:$'))
+            self.brought = float(input('Brought Price   :$'))
+            self.sold = float(input('Sold Price      :$'))
         except ValueError:
             print('Bruh, please input some numbers!')
 
@@ -76,12 +77,16 @@ def calc_total():
             Total_Profit = 0.00
             try:
                 for line in excel:
-                    if (len(line) > 0):
-                        Total_Profit += float(line[3])
-            except Exception as e:
+                    Total_Profit += float(line[3])
+                    print(("$") + str(int(float(Total_Profit) * 100 + 0.5) / 100) + " of approximate total profit")
+            except ValueError:
+                print('Value Error!\nA string is found at where a number is supposed to go in. \n Check your '
+                      'file and make sure it is formatted correctly.')
+
+            except Exception as e:  # Error Handling
                 print('Runtime Error:', e)
                 print('The program will now continue. If the error persist, contact the developer')
-            print(("$") + str(int(float(Total_Profit) * 100 + 0.5) / 100) + (" of approximate total profit"))
+                print('Check your file and make sure it is formatted correctly.')
     else:
         print('File is empty. Please add a board to continue')
 
@@ -104,57 +109,62 @@ def print_list():
                 for line in excel:
                     print(line)
                     # This can be more polished
-            except Exception as e:
+            except Exception as e:  # Error Handling
                 print('Runtime Error:', e)
                 print('The program will now continue. If the error persist, contact the developer')
 
 
-while True:
-    clear()
-    print(
-        '''Welcome to MotherboarManagement
+menu_message1 = '''Welcome to MotherboardManagement
     By Isaac Chen and Joe Yu
-    
-    Current filename: ''' + listname + '''
-    --------------------------------
-    [1] Add a board
-    [2] Calculate breakeven for a price 
-    [3] View full list
-    [4] Calculate total profit
-    [5] Change filename
-    [6] Exit'''
-    )
-    operation = input()
-    if operation == '1':
-        b = Board()
-        b.init()
-        b.gen_profit()
-        print("Profit is $" + str(b.profit))
-        next_step = input('Write to file? Y/N\n')  # Prompting user to write to file
-        if next_step == 'y' or next_step == 'Y':
-            b.write_to_csv()
-        input('Press Enter To Continue')
+                
+Current filename: '''
 
-    elif operation == '2':  # This takes 1 input, and returns the price it must be sold at to break even.
-        x = input('Brought Price		:')
-        print(("$") + (str(breakeven(x)) + (" is the selling price needed to break even")))
-        input('Press Enter To Continue')
+menu_message2 = '''
+--------------------------------
+[1] Add a board
+[2] Calculate breakeven for a price 
+[3] View full list
+[4] Calculate total profit
+[5] Change filename
+[6] Exit'''
 
-    elif operation == '3':
-        print_list()
-        input('Press Enter To Continue')
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        listname = sys.argv[1]
+    while True:
+        clear()
+        print(menu_message1 + listname + menu_message2)
+        operation = input()
+        if operation == '1':
+            b = Board()
+            b.init()
+            b.gen_profit()
+            print("Profit is $" + str(b.profit))
+            next_step = input('Write to file? Y/N\n')  # Prompting user to write to file
+            if next_step == 'y' or next_step == 'Y':
+                b.write_to_csv()
+            input('Press Enter To Continue')
 
-    elif operation == '4':  # This prints the total profit on the Terminal.
-        calc_total()
-        input('Press Enter To Continue')
+        elif operation == '2':  # This takes 1 input, and returns the price it must be sold at to break even.
+            x = input('Brought Price		:')
+            print("$" + (str(breakeven(x)) + " is the selling price needed to break even"))
+            input('Press Enter To Continue')
 
-    elif operation == '5':
-        listname = input('Please enter new filename, include suffix (.csv):')
-        input('Press Enter To Continue')
+        elif operation == '3':
+            print_list()
+            input('Press Enter To Continue')
 
-    elif operation == '6':
-        print('Have a good day!')
-        break
-    else:
-        print("Wrong Operation, Please input 1-5")
-        input('Press Enter To Continue')
+        elif operation == '4':  # This prints the total profit on the Terminal.
+            calc_total()
+            input('Press Enter To Continue')
+
+        elif operation == '5':
+            listname = input('Please enter new filename, include suffix (.csv):')
+            input('Press Enter To Continue')
+
+        elif operation == '6':
+            print('Have a good day!')
+            break
+        else:
+            print("Wrong Operation, Please input 1-5")
+            input('Press Enter To Continue')

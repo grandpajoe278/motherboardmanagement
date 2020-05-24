@@ -1,21 +1,15 @@
 # motherboardmanagement
-SETUP:
-M.csv is my spreadsheet file that keeps track of all motherboard details. Before running the program, edit the code so that the file path is correct and pointing to where YOU downloaded M.csv . "M.csv" is referenced in the code 3 times. The references should have this format: "with open("FILE_PATH/m.csv", "......") as f:
 
-ABOUT & HOW TO USE:
-Writes details (name, price bought, price sold) to a .csv file while also recording the profit. Also calculates necessary selling price for a given buying price. Can also return total profit.
+HOW TO USE:
 
-3 different functions built in (through commandline):
+Run the script by:
+ 
+    python MotherboardManagement.py [CSV FILE NAME]
+  
+That's it, follow the on screen instructions. You don't have to put a file name. The default csv file generated is named M.csv. It will be generated automatically if it doesn't exist. 
 
-1. Write details about board to .csv file. Profit will be recorded automatically based on a formula.
-Input format: "python3 MotherboardManager.py BOARD_NAME PRICE_BOUGHT PRICE_SOLD", PROFIT will be calculated automatically and stored to csv file. Put an underscore where there should be a space in the motherboard name, it will be converted to a space automatically.
-Example: "python3 MotherboardManager.py ASUS_P8Z77V 45.00 69.00"
+If you ever wish to edit the csv by yourself, here is the format:
 
-2. Return the price necessary to break even when flipping a motherboard. The one argument is the buying price. The selling price will be returned automatically. Only put in the total price of the item+shipping, do not input taxes (~6%) since that is calculated automatically. 
-Example: "python3 MotherboardManager.py 29.99"
-
-3. Calculate total profits, taken by adding up all the PROFIT cells in the file  M.csv . No arguments necessary.
-Example: "python3 MotherboardManager.py"
-
-
-
+    MOTHERBOARD_NAME,BROUGHT_PRICE,SOLD_PRICE,PROFIT
+    
+Do not include currency symbols in the list. Put numbers only
